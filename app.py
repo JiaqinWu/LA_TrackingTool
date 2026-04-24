@@ -329,7 +329,7 @@ with tab3:
             text_consent = st.selectbox("Text consent", ["Yes", "No", "Unknown"])
             social_media_profile = st.text_input("Social media profile")
             assigned_staff = st.text_input("Assigned staff")
-            current_status = st.selectbox("Current status", ["Open", "Active Outreach", "Pending Follow-up", "Closed", "Escalated"])
+            current_status = st.selectbox("Current status", ["Active","At Risk","Out of Care"])
 
         notes = st.text_area("Notes")
 
@@ -337,7 +337,7 @@ with tab3:
 
         if submitted:
             client_id = str(uuid.uuid4())[:8]
-            now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            now_str = datetime.now().strftime("%Y-%m-%d")
 
             row = [
                 client_id,
@@ -398,7 +398,7 @@ with tab4:
 
             if submitted_log:
                 log_id = str(uuid.uuid4())[:10]
-                now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                now_str = datetime.now().strftime("%Y-%m-%d")
 
                 row = [
                     log_id,
