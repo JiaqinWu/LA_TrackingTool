@@ -78,8 +78,8 @@ def ensure_sheet_headers():
 
     if not clients_ws.get_all_values():
         clients_ws.append_row([
-            "client_id", "first_name", "last_name", "dob", "phone_1", "phone_2",
-            "email", "text_consent", "address", "risk_level", "current_status",
+            "client_id", "dob", "phone_1", "phone_2",
+            "email", "text_consent", "social_media_profile", "risk_factor", "current_status",
             "assigned_staff", "notes", "created_at", "updated_at"
         ])
 
@@ -251,7 +251,7 @@ with tab1:
 # -----------------------------
 with tab2:
     st.subheader("Search Client")
-    search = st.text_input("Search by client ID, name, phone, or email")
+    search = st.text_input("Search by client ID, phone, or email")
 
     search_df = filtered_clients.copy()
     if search:
@@ -260,7 +260,6 @@ with tab2:
         def row_match(row):
             values = [
                 str(row.get("client_id", "")),
-                str(row.get("full_name", "")),
                 str(row.get("phone_1", "")),
                 str(row.get("phone_2", "")),
                 str(row.get("email", "")),
@@ -271,8 +270,8 @@ with tab2:
 
     display_cols = [
         c for c in [
-            "client_id", "full_name", "dob", "phone_1", "email",
-            "risk_level", "current_status", "assigned_staff"
+            "client_id", "dob", "phone_1", "phone_2","email"
+            "text_consent", "social_media_profile", "risk_factor", "current_status", "assigned_staff"
         ] if c in search_df.columns
     ]
     st.dataframe(search_df[display_cols], use_container_width=True)
@@ -367,9 +366,9 @@ with tab4:
         st.warning("Add clients first before logging outreach.")
     else:
         client_options = (
-            filtered_clients[["client_id", "full_name"]]
+            filtered_clients[["client_id"]]
             .fillna("")
-            .assign(label=lambda d: d["client_id"].astype(str) + " - " + d["full_name"].astype(str))
+            .assign(label=lambda d: d["client_id"].astype(str))
         )
 
         with st.form("log_outreach_form"):
